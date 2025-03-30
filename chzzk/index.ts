@@ -10,6 +10,7 @@ import { z } from "zod";
 import { zodToJsonSchema } from "zod-to-json-schema";
 import * as clips from "./operations/clips.js";
 import * as lives from "./operations/lives.js";
+import * as home from "./operations/home.js";
 import { config } from "dotenv";
 
 config();
@@ -58,6 +59,11 @@ server.setRequestHandler(ListToolsRequestSchema, async () => {
         description: "채널 인기 라이브 검색 도구",
         inputSchema: zodToJsonSchema(lives.SearchLiveSchema),
       },
+      {
+        name: "getChzzkVideos",
+        description: "채널 인기 비디오 검색 도구",
+        inputSchema: zodToJsonSchema(home.SearchVideoSchema),
+      },
     ],
   };
 });
@@ -101,6 +107,16 @@ server.setRequestHandler(CallToolRequestSchema, async (request) => {
       case "getChzzkLives": {
         const args = lives.SearchLiveSchema.parse(request.params.arguments);
         const result = await lives.getChzzkLives({
+          ...args,
+        });
+        return {
+          content: [{ type: "text", text: JSON.stringify(result, null, 2) }],
+        };
+      }
+
+      case "getChzzkVideos": {
+        const args = home.SearchVideoSchema.parse(request.params.arguments);
+        const result = await home.getChzzkVideos({
           ...args,
         });
         return {
