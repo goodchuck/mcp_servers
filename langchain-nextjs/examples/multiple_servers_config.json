@@ -1,0 +1,11 @@
+{
+  "servers": {
+    "chzzk": {
+      "transport": "stdio",
+      "command": "node",
+      "args": [
+        "/Users/yang/coding/mcp_servers/chzzk/dist/index.js"
+      ]
+    }
+  }
+}
