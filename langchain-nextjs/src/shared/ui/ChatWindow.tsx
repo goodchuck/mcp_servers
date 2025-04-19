@@ -97,6 +97,7 @@ export function ChatWindow(props: {
         });
       }
     },
+
     streamMode: 'text',
     onError: (e) => {
       console.error(e);
